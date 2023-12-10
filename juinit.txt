@@ -1,0 +1,55 @@
+
+package com.example.mysqls;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class BootApplicationTests {
+   @Autowired 
+    UserRepository useree;
+   @Test
+   public void ReadAll() {
+	   List<User>list=useree.findAll();
+	   assertThat(list).size().isGreaterThan(0);
+   }
+@Autowired
+UserRepository repo2;
+@Test
+public void testCreate() {
+	User u = new User();
+	u.setId(211);
+	u.setTulsi("eeeee");
+	u.setShiva("kjahfjkd");
+	repo2.save(u);
+	assertNotNull(repo2.findById(211).get());
+}
+
+@Autowired 
+UserRepository repo3;
+@Test
+public void testUpdate()
+{
+User u=repo3.findById(122).get();
+u.setTulsi("shiva");
+repo3.save(u);
+assertNotEquals("madam",repo3.findById(122).get().getTulsi());
+}
+	
+
+@Autowired
+UserRepository  repo1;
+@Test
+public void testDelete()
+{
+repo1.deleteById(12);
+assertThat(repo1.existsById(2)).isFalse();
+}
+}
